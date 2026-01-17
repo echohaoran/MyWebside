@@ -1,0 +1,2319 @@
+<!DOCTYPE html><html lang="zh-CN "><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoSpace || 部署</title>
+    <meta name="author" content="汪多多是只猫">
+    <meta name="description" content="失业的网络流民 ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/AvatarIcon.png">
+    <link rel="preload" href="/css/antd.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript></noscript>
+    
+    
+    <link rel="preload" href="/css/maiden-theme.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript></noscript>
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"><script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');loadCss('//at.alicdn.com/t/font_8d5l8fzk5b87iudi.css');</script><noscript><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_8d5l8fzk5b87iudi.css"></noscript></head>
+
+<body>
+    <!-- 全局粒子背景 -->
+    <canvas id="particle-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 200; pointer-events: none;"></canvas>
+
+    <div id="loading" style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent" style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载中请稍等...</p>
+                    <div>
+                        <img src="../loadingpicture.gif" alt="loading" height="300px" width="300px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">EchoSpace</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled">
+            </a-icon></span>
+            <span>主页</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled">
+            </a-icon></span>
+            <span>归档</span>
+        </a>
+        
+        <a href="/quote">
+            <span>
+                <a-icon type="credit-card" theme="filled">
+            </a-icon></span>
+            <span>报价</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled">
+            </a-icon></span>
+            <span>关于我</span>
+        </a>
+        
+        
+        <!-- 搜索按钮 -->
+        <div class="search-container" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%);">
+            <div class="search-button" onclick="toggleSearch()" style="cursor: pointer; padding: 8px; transition: all 0.3s; color: inherit;">
+                <a-icon type="search" style="font-size: 20px; color: inherit;">
+            </a-icon></div>
+            <div id="search-dropdown" style="display: none; position: absolute; top: 50px; right: 0; width: 400px; max-height: 500px; background: white; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.15); overflow: hidden; z-index: 1000;">
+                <div style="padding: 15px; border-bottom: 1px solid #eee;">
+                    <input id="search-input" type="text" placeholder="搜索文章..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; outline: none;" oninput="searchPosts(this.value)">
+                </div>
+                <div id="search-results" style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <div style="text-align: center; color: #999; padding: 20px;">输入关键词搜索文章</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled">
+            </a-icon></span>
+            <span>EchoSpace</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled">
+                    </a-icon></div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">主页</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled">
+                    </a-icon></div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">归档</div>
+                </div>
+            </a>
+            
+            <a href="/quote">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="credit-card" theme="filled">
+                    </a-icon></div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">报价</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled">
+                    </a-icon></div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">关于我</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+
+
+                </div>
+
+                <div id="main">
+                     
+<div class="categories-tags">
+    
+    <div class="all-s">
+        
+        
+        <span>
+            <a href="/tags/Hexo/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Hexo
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/blog/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                blog
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Next-Themes/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Next Themes
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/主题配置/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                主题配置
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Blog/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Blog
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Git/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Git
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Github/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Github
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Vscode/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Vscode
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/部署/" style="background:linear-gradient(to right, #fbc2eb 0%, #bbd4ff 100%)">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                部署
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/K8s/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                K8s
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Prometheus/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Prometheus
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Grafana/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Grafana
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/监控/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                监控
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Helm/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Helm
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Linux/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Linux
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Shell命令/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Shell命令
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/pwd/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                pwd
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/基础教程/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                基础教程
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Ubuntu/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Ubuntu
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/containerd/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                containerd
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/集群部署/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                集群部署
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/运维/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                运维
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/cd/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                cd
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/ls/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                ls
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/mkdir/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                mkdir
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/rm/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                rm
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/cp/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                cp
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/mv/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                mv
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/cat/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                cat
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/head/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                head
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/tail/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                tail
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/less/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                less
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/wc/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                wc
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/find/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                find
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/grep/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                grep
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/chmod/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                chmod
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/chown/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                chown
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/df/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                df
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/du/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                du
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/free/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                free
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/top/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                top
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/ps/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                ps
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/kill/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                kill
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/curl/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                curl
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/wget/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                wget
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/ssh/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                ssh
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/tar/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                tar
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/su/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                su
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/sudo/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                sudo
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/date/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                date
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/echo/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                echo
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/touch/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                touch
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/man/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                man
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/history/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                history
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/which/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                which
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/whereis/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                whereis
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/sort/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                sort
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/uniq/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                uniq
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/cut/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                cut
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/paste/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                paste
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/磁盘管理/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                磁盘管理
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/fstab/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                fstab
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/挂载/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                挂载
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/配置/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                配置
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/内存管理/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                内存管理
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Systemd/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Systemd
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/自动化运维/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                自动化运维
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/脚本/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                脚本
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/YAML/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                YAML
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/配置文件/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                配置文件
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/监控系统/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                监控系统
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/配置解析/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                配置解析
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Office/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Office
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/激活/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                激活
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/办公软件/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                办公软件
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/PPT/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                PPT
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/EXCEL/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                EXCEL
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/WORD/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                WORD
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Windows/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Windows
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/安装教程/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                安装教程
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/SSH/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                SSH
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/端口转发/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                端口转发
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/网络服务/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                网络服务
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Tailscale/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Tailscale
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/DERP/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                DERP
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/VPS/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                VPS
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/中继节点/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                中继节点
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/网络优化/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                网络优化
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/系统安装/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                系统安装
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/老电脑/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                老电脑
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/废物利用/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                废物利用
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Docker/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Docker
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/PE/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                PE
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Windows11/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Windows11
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/教程/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                教程
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/分区/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                分区
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/PowerToys/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                PowerToys
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/微软官方工具/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                微软官方工具
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/免费开源/" style="background:#1bccbc">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                免费开源
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/效率神器/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                效率神器
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/系统增强/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                系统增强
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Windows10/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Windows10
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/装机/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                装机
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/驱动/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                驱动
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/扩展屏幕/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                扩展屏幕
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/副屏/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                副屏
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/远程桌面/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                远程桌面
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/效率工具/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                效率工具
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/飞牛OS/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                飞牛OS
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/内网穿透/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                内网穿透
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/远程访问/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                远程访问
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/NAS/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                NAS
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/旧物改造/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                旧物改造
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/家庭服务器/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                家庭服务器
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/DIY/" style="background:#879cff">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                DIY
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/服务器搭建/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                服务器搭建
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/饥荒/" style="background:#ffa2c4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                饥荒
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/DST/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                DST
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/Steam/" style="background:#00bcd4">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                Steam
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/游戏服务器/" style="background:#ff7d73">
+                <span class="icon">
+                    <a-icon type="tag" theme="filled">
+                </a-icon></span>
+                游戏服务器
+            </a>
+        </span>
+        
+        
+    </div>
+    <div id="archives">
+        
+        <a-timeline>
+            <a-timeline-item color="#a5c2f5">
+                <a-card hoverable="">
+                    <div class="item-time">2025/10/30</div>
+                    <a target="_blank" rel="noopener" href="//hexo9012/">
+                        <h3>Hexo博客完整部署指南</h3>
+                    </a>
+                    <div class="info">
+                        
+                        <span class="category">
+                            <a href="/categories/Blog">
+                                <span class="icon">
+                                    <a-icon type="book" theme="filled">
+                                </a-icon></span>
+                                Blog
+                            </a>
+                        </span>
+                        
+
+                        
+                        <span class="tags">
+                            <span class="icon">
+                                <a-icon type="tags" theme="filled">
+                            </a-icon></span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/Hexo" style="color:#00bcd4">
+                                    Hexo
+                                </a>
+                            </span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/Blog" style="color:#ffa2c4">
+                                    Blog
+                                </a>
+                            </span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/Git" style="color:#ff7d73">
+                                    Git
+                                </a>
+                            </span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/Github" style="color:#1bccbc">
+                                    Github
+                                </a>
+                            </span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/Vscode" style="color:#ff7d73">
+                                    Vscode
+                                </a>
+                            </span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/部署" style="color:#00bcd4">
+                                    部署
+                                </a>
+                            </span>
+                            
+                        </span>
+                        
+                    </div>
+                </a-card>
+            </a-timeline-item>
+        </a-timeline>
+        
+        <a-timeline>
+            <a-timeline-item color="#a5c2f5">
+                <a-card hoverable="">
+                    <div class="item-time">2025/10/28</div>
+                    <a target="_blank" rel="noopener" href="//k8sp7890/">
+                        <h3>K8s部署Prometheus和Grafana</h3>
+                    </a>
+                    <div class="info">
+                        
+                        <span class="category">
+                            <a href="/categories/Kubernetes">
+                                <span class="icon">
+                                    <a-icon type="book" theme="filled">
+                                </a-icon></span>
+                                Kubernetes
+                            </a>
+                        </span>
+                        
+
+                        
+                        <span class="tags">
+                            <span class="icon">
+                                <a-icon type="tags" theme="filled">
+                            </a-icon></span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/部署" style="color:#00bcd4">
+                                    部署
+                                </a>
+                            </span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/K8s" style="color:#879cff">
+                                    K8s
+                                </a>
+                            </span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/Prometheus" style="color:#ff7d73">
+                                    Prometheus
+                                </a>
+                            </span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/Grafana" style="color:#00bcd4">
+                                    Grafana
+                                </a>
+                            </span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/监控" style="color:#ffa2c4">
+                                    监控
+                                </a>
+                            </span>
+                            
+                            <span class="tag">
+                                
+                                <a href="/tags/Helm" style="color:#00bcd4">
+                                    Helm
+                                </a>
+                            </span>
+                            
+                        </span>
+                        
+                    </div>
+                </a-card>
+            </a-timeline-item>
+        </a-timeline>
+        
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2025 - 2026 EchoSpace
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled"></a-icon></span>
+            @汪多多是只猫
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+
+
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <div id="back-to-top" style="position: fixed; bottom: 40px; left: 40px; width: 25px; height: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: none; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: all 0.3s ease; z-index: 999; opacity: 0.5; color: white; font-size: 14px; font-weight: bold;" onclick="scrollToTop()" onmouseover="this.style.opacity='0.2'; this.style.transform='scale(1.05)';" onmouseout="this.style.opacity='0.5'; this.style.transform='scale(1)';">
+        ↑
+    </div>
+
+    
+
+    
+
+    
+
+
+
+<script src="/bundle.js"></script><script>
+// 存储所有文章数据
+const allPosts = [
+    
+    {
+        title: "Linux每日命令-39-paste",
+        path: "/paste/",
+        date: "2026/2/17",
+        excerpt: "Linux入门必学！paste命令让你轻松合并多文件行，让数据处理更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-38-cut",
+        path: "/cut/",
+        date: "2026/2/16",
+        excerpt: "Linux入门必学！cut命令让你轻松提取文本字段，让数据处理更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-37-uniq",
+        path: "/uniq/",
+        date: "2026/2/15",
+        excerpt: "Linux入门必学！uniq命令让你轻松处理重复数据，让文本分析更精准，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-36-sort",
+        path: "/sort/",
+        date: "2026/2/14",
+        excerpt: "Linux入门必学！sort命令让你轻松处理文本数据排序，让数据整理更专业，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-35-whereis",
+        path: "/whereis/",
+        date: "2026/2/13",
+        excerpt: "Linux入门必学！whereis命令让你快速定位二进制文件、源码和手册页，让文件查找更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-34-which",
+        path: "/which/",
+        date: "2026/2/12",
+        excerpt: "Linux入门必学！which命令让你快速定位可执行文件位置，让命令管理更轻松，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-33-history",
+        path: "/history/",
+        date: "2026/2/11",
+        excerpt: "Linux入门必学！history命令让你轻松查看和管理命令历史，让操作效率翻倍，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-32-man",
+        path: "/man/",
+        date: "2026/2/10",
+        excerpt: "Linux入门必学！man命令让你快速查找命令用法，让Linux学习更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-31-touch",
+        path: "/touch/",
+        date: "2026/2/9",
+        excerpt: "Linux入门必学！touch命令让你轻松创建和修改文件时间，让文件管理更灵活，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-30-echo",
+        path: "/echo/",
+        date: "2026/2/8",
+        excerpt: "Linux入门必学！echo命令让你灵活控制文本输出，让脚本编写更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-29-date",
+        path: "/date/",
+        date: "2026/2/7",
+        excerpt: "Linux入门必学！date命令让你灵活显示和设置系统时间，让时间操作更精准，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-28-sudo",
+        path: "/sudo/",
+        date: "2026/2/6",
+        excerpt: "Linux入门必学！sudo命令让你安全执行特权操作，让系统管理更安全，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-27-su",
+        path: "/su/",
+        date: "2026/2/5",
+        excerpt: "Linux入门必学！su命令让你安全切换用户身份，让系统管理更灵活，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-26-tar",
+        path: "/tar/",
+        date: "2026/2/4",
+        excerpt: "Linux入门必学！tar命令让你轻松管理文件打包和压缩，让文件传输更便捷，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-25-ssh",
+        path: "/ssh/",
+        date: "2026/1/30",
+        excerpt: "Linux入门必学！ssh命令让你安全远程管理服务器，让运维工作更便捷，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-24-wget",
+        path: "/wget/",
+        date: "2026/1/29",
+        excerpt: "Linux入门必学！wget命令让你轻松下载网络文件，让文件获取更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-23-curl",
+        path: "/curl/",
+        date: "2026/1/28",
+        excerpt: "Linux入门必学！curl命令让你轻松进行HTTP请求和文件下载，让网络操作更简单，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-22-kill",
+        path: "/kill/",
+        date: "2026/1/27",
+        excerpt: "Linux入门必学！kill命令让你优雅终止进程，让系统管理更得心应手，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-21-ps",
+        path: "/ps/",
+        date: "2026/1/26",
+        excerpt: "Linux入门必学！ps命令让你轻松查看系统进程状态，让进程管理更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-20-top",
+        path: "/top/",
+        date: "2026/1/25",
+        excerpt: "Linux入门必学！top命令让你实时查看进程和系统资源使用情况，让性能分析更直观，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-19-free",
+        path: "/free/",
+        date: "2026/1/24",
+        excerpt: "Linux入门必学！free命令让你实时查看内存使用情况，让系统性能优化更精准，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-18-du",
+        path: "/du/",
+        date: "2026/1/23",
+        excerpt: "Linux入门必学！du命令让你精确查看目录和文件大小，让存储优化更智能，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-17-df",
+        path: "/df/",
+        date: "2026/1/22",
+        excerpt: "Linux入门必学！df命令让你实时监控磁盘使用情况，让存储管理更轻松，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-16-chown",
+        path: "/chown/",
+        date: "2026/1/21",
+        excerpt: "Linux入门必学！chown命令让你轻松更改文件所有者和组，让文件管理更安全，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-15-chmod",
+        path: "/chmod/",
+        date: "2026/1/20",
+        excerpt: "Linux入门必学！chmod命令让你轻松控制文件访问权限，让系统安全更有保障，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-14-grep",
+        path: "/grep/",
+        date: "2026/1/19",
+        excerpt: "Linux入门必学！grep命令让你快速查找文件中的特定内容，让文本处理变得高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-13-find",
+        path: "/find/",
+        date: "2026/1/18",
+        excerpt: "Linux入门必学！find命令让你快速定位任意文件，让文件查找变得轻而易举，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-12-wc",
+        path: "/wc/",
+        date: "2026/1/17",
+        excerpt: "Linux入门必学！wc命令让你轻松统计文件行数、单词数、字符数，让文本分析变得简单，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-11-less",
+        path: "/less/",
+        date: "2026/1/16",
+        excerpt: "Linux入门必学！less命令让你高效查看大文件内容，让文件阅读变得游刃有余，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-10-tail",
+        path: "/tail/",
+        date: "2026/1/15",
+        excerpt: "Linux入门必学！tail命令让你轻松查看文件末尾内容，实时监控日志变得简单，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-09-head",
+        path: "/head/",
+        date: "2026/1/14",
+        excerpt: "Linux入门必学！head命令让你快速查看文件开头内容，让大文件预览变得轻松简单，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-05-rm",
+        path: "/rm/",
+        date: "2026/1/13",
+        excerpt: "Linux入门必学！rm命令让你掌握rm的使用技巧，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-04-mkdir",
+        path: "/mkdir/",
+        date: "2026/1/13",
+        excerpt: "Linux入门必学！mkdir命令让你掌握mkdir的使用技巧，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-08-cat",
+        path: "/cat/",
+        date: "2026/1/13",
+        excerpt: "Linux入门必学！cat命令让你轻松查看和合并文件内容，让文本操作变得简单高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-07-mv",
+        path: "/mv/",
+        date: "2026/1/12",
+        excerpt: "Linux入门必学！mv命令让你轻松移动和重命名文件，让文件管理变得得心应手，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-06-cp",
+        path: "/cp/",
+        date: "2026/1/11",
+        excerpt: "Linux入门必学！cp命令让你轻松备份和复制文件，让数据迁移变得简单高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-03-ls",
+        path: "/ls/",
+        date: "2026/1/9",
+        excerpt: "Linux入门必学！ls命令让你掌握ls的使用技巧，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-02-cd",
+        path: "/cd/",
+        date: "2026/1/7",
+        excerpt: "Linux入门必学！cd命令让你掌握cd的使用技巧，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-01-pwd",
+        path: "/pwd/",
+        date: "2026/1/6",
+        excerpt: "Linux入门必学！pwd命令让你随时知道自己在哪，避免在文件系统中迷路，成为Linux导航高手！..."
+    },
+    
+    {
+        title: "扩展屏幕--手机平板做副屏是怎么实现的",
+        path: "/se7892/",
+        date: "2025/12/18",
+        excerpt: "只有一个屏幕不够用？手机、平板、闲置笔记本都能变成扩展屏！本文详细介绍如何使用ParsecVDisplay虚拟显示器和UU远程，将任何设备变成你的第二屏幕，提升工作效率。..."
+    },
+    
+    {
+        title: "Windows安装-如何使用PE安装Windows11",
+        path: "/win7535/",
+        date: "2025/12/14",
+        excerpt: "使用PE安装Windows具有显著优势：无需为不同系统版本反复制作启动盘，兼容性强；可预装各类实用工具（如DiskGenius、Dism++、杀毒软件等），打造随身移动运维平台；支持在安装前对硬盘进行..."
+    },
+    
+    {
+        title: "MicrosoftOffice-手把手教你安装Office并激活",
+        path: "/office5269/",
+        date: "2025/12/8",
+        excerpt: "直接明了的教程，手把手教你如何安装office和激活，适用于所有版本的Office..."
+    },
+    
+    {
+        title: "飞牛OS-废物转生-老旧笔记本变身全能服务器",
+        path: "/HomeServer-5488/",
+        date: "2025/12/3",
+        excerpt: "将2018年的老笔记本改造成全能NAS服务器，通过安装飞牛OS实现轻量、易用的家庭服务器，提供WebUI管理界面和FN Connect远程访问功能。..."
+    },
+    
+    {
+        title: "Windows系统安装完整指南",
+        path: "/windo1234/",
+        date: "2025/11/23",
+        excerpt: "全面步骤详解Windows系统安装，包含必备工具、品牌驱动获取及BIOS启动设置，使用微软官方Media Creation Tool制作启动盘，确保硬件满血发挥和稳定流畅体验。..."
+    },
+    
+    {
+        title: "Ubuntu老电脑焕发新生活",
+        path: "/ubun4567/",
+        date: "2025/11/20",
+        excerpt: "为2018年的戴尔灵越5488安装Ubuntu系统，通过轻量化的Linux系统让老旧笔记本焕发第二春，适合办公、学习甚至轻度服务器使用。..."
+    },
+    
+    {
+        title: "Windows系统增强神器PowerToys",
+        path: "/powe6789/",
+        date: "2025/11/9",
+        excerpt: "微软官方免费开源工具集PowerToys，提供高级粘贴、颜色选择器、PowerToys Run、屏幕标尺等9大神级功能，让Windows系统效率直接拉满。..."
+    },
+    
+    {
+        title: "Hexo博客完整部署指南",
+        path: "/hexo9012/",
+        date: "2025/10/30",
+        excerpt: "从零开始创建Hexo博客的完整指南，包含环境准备、站点配置、部署设置、源代码管理以及VS Code工作流程，实现双仓库分离管理。..."
+    },
+    
+    {
+        title: "Hexo Next主题配置指南",
+        path: "/next0123/",
+        date: "2025/10/30",
+        excerpt: "非常详尽的Hexo Next主题进阶配置指南，包含页面菜单配置、文章管理、布局定制、增强功能、网站优化美化等全方位定制技巧。..."
+    },
+    
+    {
+        title: "K8s部署Prometheus和Grafana",
+        path: "/k8sp7890/",
+        date: "2025/10/28",
+        excerpt: "详细介绍如何在Kubernetes集群中使用Helm部署Prometheus和Grafana，包含完整的安装配置步骤、持久化存储设置、以及UI自定义方案。..."
+    },
+    
+    {
+        title: "Kubernetes集群部署指南",
+        path: "/kube1234/",
+        date: "2025/10/28",
+        excerpt: "在Ubuntu系统上部署Kubernetes集群的详细步骤，包括环境准备、containerd配置、集群初始化以及网络插件部署，并附带完整的命令参考。..."
+    },
+    
+    {
+        title: "Prometheus配置文件完整解析",
+        path: "/prom3456/",
+        date: "2025/10/28",
+        excerpt: "详细解析Prometheus配置文件(prometheus.yml)的所有关键部分，包括全局设置、规则加载、告警配置、指标采集和远程存储等核心功能的配置方法。..."
+    },
+    
+    {
+        title: "SSH远程端口转发配置指南",
+        path: "/sshf5678/",
+        date: "2025/10/28",
+        excerpt: "详细介绍如何通过Systemd配置持久化的SSH远程端口转发服务，包含完整的配置文件、自启动设置和故障排查方法。..."
+    },
+    
+    {
+        title: "飞牛OS Docker部署Tailscale",
+        path: "/feinu2345/",
+        date: "2025/10/28",
+        excerpt: "详细介绍如何在飞牛OS NAS系统上使用Docker部署Tailscale，实现安全可靠的远程访问方案，包含完整的配置步骤和移动端设置指南。..."
+    },
+    
+    {
+        title: "饥荒联机版服务器搭建指南",
+        path: "/jihua3456/",
+        date: "2025/10/28",
+        excerpt: "详细介绍如何在Linux系统上搭建饥荒联机版专用服务器，包括环境准备、SteamCMD安装、服务器配置、MOD管理等完整步骤。..."
+    },
+    
+    {
+        title: "Linux磁盘分区自动挂载配置",
+        path: "/disk2345/",
+        date: "2025/10/18",
+        excerpt: "详细介绍如何在Linux系统中配置磁盘分区自动挂载，包括查看磁盘信息、创建挂载点、配置fstab文件以及处理NTFS分区等常见场景。..."
+    },
+    
+    {
+        title: "Linux自动内存缓存清理方案",
+        path: "/memo8901/",
+        date: "2025/10/18",
+        excerpt: "基于Systemd的Linux内存缓存自动清理方案，通过Shell脚本和Systemd Timer实现定时、安全的缓存清理，包含可用内存阈值检查和完整的日志监控配置。..."
+    },
+    
+    {
+        title: "Tailscale私有DERP中继部署",
+        path: "/tail4567/",
+        date: "2025/10/18",
+        excerpt: "在VPS上自建Tailscale DERP中继服务，包含Go环境安装、derper编译安装、自签名证书生成、derpMap配置及systemd服务化，提升无法P2P直连设备的连接稳定性。..."
+    }
+    
+];
+
+function toggleSearch() {
+    const dropdown = document.getElementById('search-dropdown');
+    if (dropdown.style.display === 'none') {
+        dropdown.style.display = 'block';
+        document.getElementById('search-input').focus();
+        document.addEventListener('click', closeSearchOnClickOutside);
+    } else {
+        dropdown.style.display = 'none';
+        document.removeEventListener('click', closeSearchOnClickOutside);
+    }
+}
+
+function closeSearchOnClickOutside(event) {
+    const container = document.querySelector('.search-container');
+    if (!container.contains(event.target)) {
+        document.getElementById('search-dropdown').style.display = 'none';
+        document.removeEventListener('click', closeSearchOnClickOutside);
+    }
+}
+
+function searchPosts(keyword) {
+    const resultsContainer = document.getElementById('search-results');
+    
+    if (!keyword.trim()) {
+        resultsContainer.innerHTML = '<div style="text-align: center; color: #999; padding: 20px;">输入关键词搜索文章</div>';
+        return;
+    }
+    
+    const results = allPosts.filter(post => 
+        post.title.toLowerCase().includes(keyword.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(keyword.toLowerCase())
+    );
+    
+    if (results.length === 0) {
+        resultsContainer.innerHTML = '<div style="text-align: center; color: #999; padding: 20px;">未找到相关文章</div>';
+        return;
+    }
+    
+    resultsContainer.innerHTML = results.map(post => `
+        <a href="${post.path}" style="display: block; padding: 12px; margin: 5px 0; border-radius: 6px; text-decoration: none; color: #333; transition: all 0.3s;" 
+           onmouseover="this.style.background='#f5f5f5'" 
+           onmouseout="this.style.background='transparent'">
+            <div style="font-weight: 500; margin-bottom: 5px; color: #ff728b;">${post.title}</div>
+            <div style="font-size: 12px; color: #999; margin-bottom: 5px;">${post.date}</div>
+            <div style="font-size: 13px; color: #666; line-height: 1.4;">${post.excerpt}</div>
+        </a>
+    `).join('');
+}
+;
+
+        new Vue({
+            el: '#archives'
+        })
+    ;
+
+        // 返回顶部功能
+        window.addEventListener('scroll', function() {
+            var backToTop = document.getElementById('back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    ;
+
+        // 高对比度粒子效果 - 带边界反弹和生命周期
+        (function() {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            const minParticles = 20;
+            const maxParticles = 50;
+            const colors = ['#ff6b9d', '#c44569', '#4a69bd', '#0c2461', '#ffa502', '#ff6348'];
+            
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 1.4;
+                    this.vy = (Math.random() - 0.5) * 1.4;
+                    this.radius = Math.random() * 3 + 2;
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.baseOpacity = Math.random() * 0.25 + 0.25;
+                    this.createdTime = Date.now();
+                    this.lifetime = 10000; // 10秒生命周期
+                    this.fadeInDuration = 1000; // 1秒淡入
+                    this.fadeOutDuration = 1000; // 1秒淡出
+                }
+                
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    // 边界反弹
+                    if (this.x - this.radius < 0) {
+                        this.x = this.radius;
+                        this.vx *= -1;
+                    }
+                    if (this.x + this.radius > canvas.width) {
+                        this.x = canvas.width - this.radius;
+                        this.vx *= -1;
+                    }
+                    if (this.y - this.radius < 0) {
+                        this.y = this.radius;
+                        this.vy *= -1;
+                    }
+                    if (this.y + this.radius > canvas.height) {
+                        this.y = canvas.height - this.radius;
+                        this.vy *= -1;
+                    }
+                }
+                
+                getAge() {
+                    return Date.now() - this.createdTime;
+                }
+                
+                isExpired() {
+                    return this.getAge() > this.lifetime;
+                }
+                
+                getOpacity() {
+                    const age = this.getAge();
+                    let opacity = this.baseOpacity;
+                    
+                    // 淡入效果
+                    if (age < this.fadeInDuration) {
+                        opacity *= age / this.fadeInDuration;
+                    }
+                    // 淡出效果
+                    else if (age > this.lifetime - this.fadeOutDuration) {
+                        const fadeProgress = (this.lifetime - age) / this.fadeOutDuration;
+                        opacity *= fadeProgress;
+                    }
+                    
+                    return opacity;
+                }
+                
+                draw() {
+                    const currentOpacity = this.getOpacity();
+                    
+                    // 添加高斯模糊效果
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = this.color;
+                    
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = currentOpacity;
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                    
+                    // 重置模糊效果
+                    ctx.shadowBlur = 0;
+                }
+            }
+            
+            // 初始化粒子
+            for (let i = 0; i < 30; i++) {
+                particles.push(new Particle());
+            }
+            
+            function manageParticles() {
+                // 移除过期粒子
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    if (particles[i].isExpired()) {
+                        particles.splice(i, 1);
+                    }
+                }
+                
+                // 维持粒子数量
+                if (particles.length < minParticles) {
+                    particles.push(new Particle());
+                } else if (particles.length < maxParticles && Math.random() < 0.02) {
+                    particles.push(new Particle());
+                }
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                manageParticles();
+                
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+            
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        })();
+    ;
+
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script></body></html>

@@ -1,0 +1,1284 @@
+<!DOCTYPE html><html lang="zh-CN "><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoSpace || Hexo Next主题配置指南</title>
+    <meta name="author" content="汪多多是只猫">
+    <meta name="description" content="失业的网络流民 ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/AvatarIcon.png">
+    <link rel="preload" href="/css/antd.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript></noscript>
+    
+    
+    <link rel="preload" href="/css/maiden-theme.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript></noscript>
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"><script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');loadCss('//at.alicdn.com/t/font_8d5l8fzk5b87iudi.css');loadCss('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css');</script><noscript><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_8d5l8fzk5b87iudi.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"></noscript></head>
+
+<body>
+    <!-- 全局粒子背景 -->
+    <canvas id="particle-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 200; pointer-events: none;"></canvas>
+
+    <div id="loading" style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent" style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载中请稍等...</p>
+                    <div>
+                        <img src="../loadingpicture.gif" alt="loading" height="300px" width="300px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">EchoSpace</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled">
+            </a-icon></span>
+            <span>主页</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled">
+            </a-icon></span>
+            <span>归档</span>
+        </a>
+        
+        <a href="/quote">
+            <span>
+                <a-icon type="credit-card" theme="filled">
+            </a-icon></span>
+            <span>报价</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled">
+            </a-icon></span>
+            <span>关于我</span>
+        </a>
+        
+        
+        <!-- 搜索按钮 -->
+        <div class="search-container" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%);">
+            <div class="search-button" onclick="toggleSearch()" style="cursor: pointer; padding: 8px; transition: all 0.3s; color: inherit;">
+                <a-icon type="search" style="font-size: 20px; color: inherit;">
+            </a-icon></div>
+            <div id="search-dropdown" style="display: none; position: absolute; top: 50px; right: 0; width: 400px; max-height: 500px; background: white; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.15); overflow: hidden; z-index: 1000;">
+                <div style="padding: 15px; border-bottom: 1px solid #eee;">
+                    <input id="search-input" type="text" placeholder="搜索文章..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; outline: none;" oninput="searchPosts(this.value)">
+                </div>
+                <div id="search-results" style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <div style="text-align: center; color: #999; padding: 20px;">输入关键词搜索文章</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled">
+            </a-icon></span>
+            <span>EchoSpace</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled">
+                    </a-icon></div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">主页</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled">
+                    </a-icon></div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">归档</div>
+                </div>
+            </a>
+            
+            <a href="/quote">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="credit-card" theme="filled">
+                    </a-icon></div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">报价</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled">
+                    </a-icon></div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">关于我</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+
+
+                </div>
+
+                <div id="main">
+                     
+
+
+<div style="display: flex; gap: 20px; max-width: 1400px; margin: 0 auto; padding: 20px;">
+    <!-- 文章内容 -->
+    <div class="article" style="flex: 1; min-width: 0;">
+    
+    <!-- 上一篇/下一篇导航 -->
+    <div style="display: flex; justify-content: space-between; margin-bottom: 20px; gap: 10px;">
+        <div style="flex: 1; display: flex;">
+            
+            <a href="/k8sp7890/" style="padding: 8px 12px; background: transparent; color: #666; text-decoration: none; border-radius: 6px; border: 1px solid #ddd; display: inline-flex; align-items: center; transition: all 0.3s; font-size: 14px;" onmouseover="this.style.borderColor='#1890ff'; this.style.color='#1890ff';" onmouseout="this.style.borderColor='#ddd'; this.style.color='#666';">
+                <i class="anticon anticon-left" style="margin-right: 6px;"></i>
+                <span style="white-space: nowrap;">上一篇: K8s部署...</span>
+            </a>
+            
+        </div>
+        
+        <div style="flex: 1; display: flex; justify-content: flex-end;">
+            
+            <a href="/hexo9012/" style="padding: 8px 12px; background: transparent; color: #666; text-decoration: none; border-radius: 6px; border: 1px solid #ddd; display: inline-flex; align-items: center; transition: all 0.3s; font-size: 14px;" onmouseover="this.style.borderColor='#1890ff'; this.style.color='#1890ff';" onmouseout="this.style.borderColor='#ddd'; this.style.color='#666';">
+                <span style="white-space: nowrap;">下一篇: Hexo博...</span>
+                <i class="anticon anticon-right" style="margin-left: 6px;"></i>
+            </a>
+            
+        </div>
+    </div>
+    
+    <div>
+        <h1>
+            <a href="//Hexo Next主题配置指南">Hexo Next主题配置指南</a>
+        </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled">
+            </a-icon></span>
+            2025/10/30
+        </span>
+
+        
+        <span class="category">
+            <a href="/categories/Blog">
+                <span class="icon">
+                    <a-icon type="book" theme="filled">
+                </a-icon></span>
+                Blog
+            </a>
+        </span>
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled">
+            </a-icon></span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Hexo" style="color:#879cff">
+                    Hexo
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/blog" style="color:#ff7d73">
+                    blog
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Next-Themes" style="color:#879cff">
+                    Next Themes
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/主题配置" style="color:#ff7d73">
+                    主题配置
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre="">
+        <p>这是一个非常详尽的 Hexo Next 主题进阶配置指南。<br>本文记录了对 Hexo + NexT 博客进行定制和美化的进阶技巧。</p>
+<blockquote>
+<p>作者：多多是只猫 (<a href="https://blog.echospace.top/">https://blog.echospace.top</a>)_<br>原作者：木鸟杂记 （<a target="_blank" rel="noopener" href="https://www.qtmuniao.com)/">https://www.qtmuniao.com）</a></p>
+</blockquote>
+<h1 id="🎨-Hexo-NexT-主题进阶定制指南"><a href="#🎨-Hexo-NexT-主题进阶定制指南" class="headerlink" title="🎨 Hexo NexT 主题进阶定制指南"></a>🎨 Hexo NexT 主题进阶定制指南</h1><p><strong>提示：</strong> 每次修改配置后，请在本地运行</p>
+<pre><code class="bash">hexo clean 
+hexo generate 
+hexo deploy
+</code></pre>
+<p>(<code>http://localhost:4000/</code>) 预览效果。NexT 主题的配置修改建议在站点根目录的 <code>_config.next.yml</code> 中进行。</p>
+<h2 id="一、页面与菜单配置"><a href="#一、页面与菜单配置" class="headerlink" title="一、页面与菜单配置"></a>一、页面与菜单配置</h2><h3 id="1-添加-“关于”-页面"><a href="#1-添加-“关于”-页面" class="headerlink" title="1. 添加 “关于” 页面"></a>1. 添加 “关于” 页面</h3><p>通过两步完成“关于”页面的创建和菜单显示。</p>
+<ol>
+<li><p><strong>新建页面：</strong></p>
+<pre><code class="Bash">hexo new page "about"
+</code></pre>
+</li>
+<li><p><strong>菜单显示：</strong> 在主题配置文件（<code>_config.next.yml</code>）中，取消 <code>menu</code> 下 <code>about</code> 的注释。</p>
+<pre><code class="YAML"># _config.next.yml
+menu:
+  home: /
+  archives: /archives || archive
+  tags: /tags || tags
+  about: /about || user # 去掉注释
+</code></pre>
+</li>
+</ol>
+<hr>
+<h3 id="2-强制-HTTPS"><a href="#2-强制-HTTPS" class="headerlink" title="2. 强制 HTTPS"></a>2. 强制 HTTPS</h3><p>如果您的博客托管在 GitHub Pages 上，强制 HTTPS 访问非常简单：</p>
+<ul>
+<li><strong>操作：</strong> 登录 GitHub，进入您的博客仓库的 <strong>Settings</strong>，勾选 <strong>Enforce HTTPS</strong> 即可。</li>
+</ul>
+<h2 id="二、文章管理与布局"><a href="#二、文章管理与布局" class="headerlink" title="二、文章管理与布局"></a>二、文章管理与布局</h2><h3 id="1-草稿布局定制"><a href="#1-草稿布局定制" class="headerlink" title="1. 草稿布局定制"></a>1. 草稿布局定制</h3><p>为避免未完成的文章被发布，使用 <code>draft</code> 布局，并定制其模板以包含日期。</p>
+<ul>
+<li><p><strong>新建草稿：</strong> <code>hexo new draft "blog title"</code></p>
+</li>
+<li><h2 id="修改模板：-找到-scaffolds-draft-md，添加-date-字段。-Markdown"><a href="#修改模板：-找到-scaffolds-draft-md，添加-date-字段。-Markdown" class="headerlink" title="修改模板： 找到 scaffolds/draft.md，添加 date 字段。  ```Markdown"></a><strong>修改模板：</strong> 找到 <code>scaffolds/draft.md</code>，添加 <code>date</code> 字段。<br><br>  ```Markdown</h2><h2 id="title-tags-categories-description-date"><a href="#title-tags-categories-description-date" class="headerlink" title="  title:   tags:  categories:  description:  date:  "></a>  title: Hexo Next主题配置指南<br>  tags:<br>  categories:<br>  description:<br>  date: 1761801696000 </h2><pre><code>
+</code></pre>
+</li>
+</ul>
+<h3 id="2-广义布局定制"><a href="#2-广义布局定制" class="headerlink" title="2. 广义布局定制"></a>2. 广义布局定制</h3><p>您可以在 <code>scaffolds</code> 文件夹中定制任意多个布局模板（例如 <code>test.md</code>），用于不同类型的文章。</p>
+<ul>
+<li><p><strong>示例：</strong></p>
+<pre><code class="Bash"># 复制 page 模板并重命名为 test.md
+cp scaffolds/page.md scaffolds/test.md 
+
+# 使用新模板创建文章
+hexo new test 'test'
+# 文章会被创建在 source/_posts/ 中，并使用 test 模板
+</code></pre>
+</li>
+</ul>
+<h3 id="3-文章截断设置"><a href="#3-文章截断设置" class="headerlink" title="3. 文章截断设置"></a>3. 文章截断设置</h3><p>控制首页文章显示长度，避免全文显示。</p>
+<ol>
+<li><p><strong>启用截断功能：</strong> 在主题配置文件（<code>_config.next.yml</code>）中设置：</p>
+<pre><code class="YAML">excerpt_description: true
+</code></pre>
+</li>
+<li><p><strong>在文章中插入标记：</strong> 在 Markdown 文件中您希望截断的位置插入 ``。</p>
+<pre><code class="Markdown">这是文章摘要部分。
+这是文章的剩余部分，只在文章页显示。
+</code></pre>
+<p> <em>（或者，您可以在文章的 Front-matter 中直接使用 <code>description</code> 字段作为摘要。）</em></p>
+</li>
+</ol>
+<h2 id="三、文章增强功能"><a href="#三、文章增强功能" class="headerlink" title="三、文章增强功能"></a>三、文章增强功能</h2><h3 id="1-相关文章推荐"><a href="#1-相关文章推荐" class="headerlink" title="1. 相关文章推荐"></a>1. 相关文章推荐</h3><p>通过插件实现文章详情页的相关文章推荐。</p>
+<ol>
+<li><p><strong>安装插件：</strong></p>
+<pre><code class="Bash">npm install hexo-related-popular-posts --save
+</code></pre>
+</li>
+<li><p><strong>配置 NexT 主题：</strong> 在主题配置文件（<code>_config.next.yml</code>）中启用并设置推荐参数：</p>
+<pre><code class="YAML">related_posts:
+  enable: true
+  title: 猜你喜欢 # 自定义标题
+  display_in_home: false # 不在首页显示
+  params:
+    maxCount: 5 # 最多推荐5篇
+    PPMixingRate: 0.4 # 火热文章与相关文章的推荐比率
+</code></pre>
+</li>
+</ol>
+<h3 id="2-博客文章搜索-本地搜索"><a href="#2-博客文章搜索-本地搜索" class="headerlink" title="2. 博客文章搜索 (本地搜索)"></a>2. 博客文章搜索 (本地搜索)</h3><p>安装插件，实现站内文章的本地搜索功能。</p>
+<ol>
+<li><p><strong>安装插件：</strong></p>
+<pre><code class="Bash">npm install hexo-generator-searchdb --save
+</code></pre>
+</li>
+<li><p><strong>配置站点文件 (<code>_config.yml</code>)：</strong> 在博客根目录的 <code>_config.yml</code> 中添加搜索配置：</p>
+<pre><code class="YAML">search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+</code></pre>
+</li>
+<li><p><strong>配置主题文件 (<code>_config.next.yml</code>)：</strong> 启用本地搜索功能：</p>
+<pre><code class="YAML">local_search:
+  enable: true
+  trigger: manual # 或 auto
+  top_n_per_article: 1
+  # ...其他配置...
+</code></pre>
+</li>
+</ol>
+<h3 id="3-专题系列组织"><a href="#3-专题系列组织" class="headerlink" title="3. 专题系列组织"></a>3. 专题系列组织</h3><p>通过创建自定义标签页，并手动组织站内文章链接，实现专题系列。</p>
+<ol>
+<li><p><strong>新建专题页：</strong></p>
+<pre><code class="Bash">hexo new page series
+</code></pre>
+</li>
+<li><p><strong>配置菜单：</strong> 在主题配置 (<code>_config.next.yml</code>) 和语言文件 (<code>themes/next/languages/zh-CN.yml</code>) 中添加 <code>series: /series/ || reorder</code> 和 <code>series: 专题</code>。</p>
+</li>
+<li><p><strong>编辑专题内容：</strong> 编辑 <code>source/series/index.md</code>，使用 Hexo 语法引用站内文章：</p>
+<pre><code class="Markdown">## 专题系列目录
+{% post_link post-name 链接标题 %}
+</code></pre>
+</li>
+</ol>
+<h2 id="四、网站优化与美化"><a href="#四、网站优化与美化" class="headerlink" title="四、网站优化与美化"></a>四、网站优化与美化</h2><h3 id="1-站内访客量统计-不蒜子"><a href="#1-站内访客量统计-不蒜子" class="headerlink" title="1. 站内访客量统计 (不蒜子)"></a>1. 站内访客量统计 (不蒜子)</h3><p>在页脚添加简单的访客数和访问量统计。</p>
+<ul>
+<li><p><strong>添加代码：</strong> 找到主题的页脚模板文件（通常是 <code>themes/next/layout/_partials/footer.swig</code> 或类似的模板），添加以下代码：</p>
+<pre><code class="HTML">&lt;div class="powered-by"&gt;
+  &lt;script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"&gt;&lt;/script&gt;
+  &lt;i class="fa fa-user-md"&gt;&lt;/i&gt;
+  &lt;span id="busuanzi_container_site_uv"&gt;
+    本站访客数:&lt;span id="busuanzi_value_site_uv"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+  &lt;span class="post-meta-divider"&gt;|&lt;/span&gt;
+  &lt;span id="busuanzi_container_site_pv"&gt;
+    本站访问量&lt;span id="busuanzi_value_site_pv"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+</li>
+</ul>
+<h3 id="2-显示浏览进度条"><a href="#2-显示浏览进度条" class="headerlink" title="2. 显示浏览进度条"></a>2. 显示浏览进度条</h3><p>在页面顶部或底部显示阅读进度条。</p>
+<ul>
+<li><p><strong>配置主题文件 (<code>_config.next.yml</code>)：</strong></p>
+<pre><code class="YAML">reading_progress:
+  enable: true
+  position: top # 或 bottom
+  color: "#37c6c0"
+  height: 2px
+</code></pre>
+</li>
+</ul>
+<h3 id="3-站点地图-SEO-优化"><a href="#3-站点地图-SEO-优化" class="headerlink" title="3. 站点地图 (SEO 优化)"></a>3. 站点地图 (SEO 优化)</h3><p>为搜索引擎提供网站结构图，利于 SEO。</p>
+<ol>
+<li><p><strong>安装插件：</strong></p>
+<pre><code class="Bash">npm install hexo-generator-sitemap --save
+</code></pre>
+</li>
+<li><p><strong>Hexo 配置 (<code>_config.yml</code>)：</strong> 在站点配置文件中添加插件：</p>
+<pre><code class="YAML"># Extensions
+plugins: hexo-generator-sitemap
+</code></pre>
+</li>
+<li><p><strong>NexT 配置 (<code>_config.next.yml</code>)：</strong> 在菜单中添加站点地图链接：</p>
+<pre><code class="YAML">menu: 
+  # ...其他菜单项
+  sitemap: /sitemap.xml || sitemap
+</code></pre>
+<p> <em>（生成后，您可以通过 <code>www.yoursite.com/sitemap.xml</code> 访问，并提交给 Google Search Console。）</em></p>
+</li>
+</ol>
+<h3 id="4-相册页面"><a href="#4-相册页面" class="headerlink" title="4. 相册页面"></a>4. 相册页面</h3><p>利用 NexT 的 Tag Plugin 创建相册展示页面。</p>
+<ol>
+<li><p><strong>新建相册页：</strong></p>
+<pre><code class="Bash">hexo new page photos
+</code></pre>
+<p> 并在语言文件 (<code>zh-CN.yml</code>) 中配置菜单中文名称 <code>photos: 相册</code>。</p>
+</li>
+<li><p><strong>编辑图片：</strong> 在 <code>source/photos/index.md</code> 中使用 <code>group picture</code> 标签组织图片：</p>
+<pre><code class="Markdown">## 某某地方玩
+{% gp 6-3 %}
+      ![](/images/pic1.png)
+      ![](/images/pic2.png)
+      ...
+    {% endgp %}
+</code></pre>
+<p> <em>（<code>6-3</code> 表示该组有 6 张图片，每行最多排 3 张。）</em></p>
+</li>
+</ol>
+<h3 id="5-Google-AdSense-广告"><a href="#5-Google-AdSense-广告" class="headerlink" title="5. Google AdSense 广告"></a>5. Google AdSense 广告</h3><p>如果您已通过 Google AdSense 审核：</p>
+<ol>
+<li><p><strong>限制尺寸和位置：</strong> 建议只选择<strong>展示广告</strong>，并限制尺寸（如 280px * 100px），将其放在侧边栏底部。</p>
+</li>
+<li><p><strong>自定义样式：</strong></p>
+<ul>
+<li><p>在 <code>themes/next/source/css/_my/</code> 目录下新建 <code>mycss.styl</code>。</p>
+</li>
+<li><p>在 <code>themes/next/source/css/main.styl</code> 中引用：<code>@import "_my/mycss";</code></p>
+</li>
+<li><p>在 <code>mycss.styl</code> 中添加广告的 CSS 样式，例如：</p>
+<pre><code class="CSS">.sidebar-ads {
+  border-top: 1px dotted #ccc;
+  width: 100%;
+  height: 100px;
+  padding-top: 15px;
+  margin-bottom: 5px;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>（多多是只猫：<a href="https://blog.echospace.top/">https://blog.echospace.top</a>）。</p>
+</blockquote>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>全平台同名”汪多多是只猫”，专注分享实用开源工具，让你的数字生活更自由！</p>
+<p>关注我，发现更多旧物改造的乐趣与技巧！</p>
+<hr>
+
+    </div>
+
+    <div class="donate-section" style="text-align: center; margin: 40px 0; padding: 20px; border-top: 1px solid #eee;">
+        <div class="donate-button" style="position: relative; display: inline-block;">
+            <button style="background: linear-gradient(120deg, #ff9edb 0, #96ceff 100%); color: white; border: none; padding: 12px 30px; font-size: 16px; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                ☕ 赏杯咖啡
+            </button>
+            <div class="donate-qrcode" style="display: none; position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); background: white; padding: 20px; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.15); z-index: 100;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="text-align: center;">
+                        <img src="/微信收款码.png" alt="微信收款码" style="max-width: 225px; height: auto; border-radius: 8px;">
+                        <p style="margin-top: 10px; font-size: 14px; color: #666;">微信</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <img src="/支付宝收款码.jpg" alt="支付宝收款码" style="max-width: 225px; height: auto; border-radius: 8px;">
+                        <p style="margin-top: 10px; font-size: 14px; color: #666;">支付宝</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    
+    
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+    </div>
+
+    <!-- 右侧Card -->
+    <div id="home-card" style="width: 360px; flex-shrink: 0; position: relative; top: 0;">
+        <a-affix :offset-top="card_top">
+    <a-card class="card-style" style="width: 360px">
+        <div class="avatar">
+            <img src="/AvatarIcon.png" alt="头像">
+        </div>
+        <div class="name">
+            汪多多是只猫
+        </div>
+        <div class="descriptions">
+            
+            <div class="description">
+                失业的运维工程师
+            </div>
+            
+            <div class="description">
+                热爱开源与分享
+            </div>
+            
+        </div>
+        <div class="icon-links">
+            
+            <span class="icon-link">
+                <a target="_blank" rel="noopener" href="https://github.com/echohaoran">
+
+                    
+                    <a-icon type="github" theme="filled">
+                    
+                </a-icon></a>
+            </span>
+            
+            <span class="icon-link">
+                <a href="tencent://message/?uin=965704308">
+
+                    
+                    <i class="iconfont icon-qq" style="font-size: 18px;"></i>
+                    
+                </a>
+            </span>
+            
+            <span class="icon-link">
+                <a href="mailto:echohaoran@gmail.com">
+
+                    
+                    <a-icon type="mail" theme="filled">
+                    
+                </a-icon></a>
+            </span>
+            
+        </div>
+        <div class="friend-links">
+            
+            <div class="friend-link">
+                
+                <a target="_blank" rel="noopener" href="https://www.xiaohongshu.com/user/profile/5f2a6f4e0000000001002b1e">
+                    
+                    <i class="iconfont icon-xiaohongshu1" style="font-size: 16px; margin-right: 5px;"></i>
+                    
+                    小红书
+                </a>
+            </div>
+            
+            <div class="friend-link">
+                
+                <a target="_blank" rel="noopener" href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&amp;k=tZPas71rhz--TPIuBd0ZQgULhVlIrjEs&amp;authKey=3sGqJUPaFCu%2B9i0l7OhdyF66IY%2FnhItcZ4XQ%2BjTBo6HWauPAzfpm73DxnzkY1PS%2F&amp;noverify=0&amp;group_code=1078015314">
+                    
+                    <i class="iconfont icon-qunzu" style="font-size: 16px; margin-right: 5px;"></i>
+                    
+                    获取帮助
+                </a>
+            </div>
+            
+        </div>
+        <div class="wechat-qrcode" style="text-align: center; margin-top: 20px;">
+            <img src="/微信公众号图片.png" alt="微信公众号" style="width: 260px; border-radius: 8px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+    </a-card>
+</a-affix>
+    </div>
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2025 - 2026 EchoSpace
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled"></a-icon></span>
+            @汪多多是只猫
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+
+
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <div id="back-to-top" style="position: fixed; bottom: 40px; left: 40px; width: 25px; height: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: none; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: all 0.3s ease; z-index: 999; opacity: 0.5; color: white; font-size: 14px; font-weight: bold;" onclick="scrollToTop()" onmouseover="this.style.opacity='0.2'; this.style.transform='scale(1.05)';" onmouseout="this.style.opacity='0.5'; this.style.transform='scale(1)';">
+        ↑
+    </div>
+
+    
+
+    
+
+    
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+
+<script src="/bundle.js"></script><script>
+// 存储所有文章数据
+const allPosts = [
+    
+    {
+        title: "Linux每日命令-39-paste",
+        path: "/paste/",
+        date: "2026/2/17",
+        excerpt: "Linux入门必学！paste命令让你轻松合并多文件行，让数据处理更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-38-cut",
+        path: "/cut/",
+        date: "2026/2/16",
+        excerpt: "Linux入门必学！cut命令让你轻松提取文本字段，让数据处理更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-37-uniq",
+        path: "/uniq/",
+        date: "2026/2/15",
+        excerpt: "Linux入门必学！uniq命令让你轻松处理重复数据，让文本分析更精准，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-36-sort",
+        path: "/sort/",
+        date: "2026/2/14",
+        excerpt: "Linux入门必学！sort命令让你轻松处理文本数据排序，让数据整理更专业，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-35-whereis",
+        path: "/whereis/",
+        date: "2026/2/13",
+        excerpt: "Linux入门必学！whereis命令让你快速定位二进制文件、源码和手册页，让文件查找更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-34-which",
+        path: "/which/",
+        date: "2026/2/12",
+        excerpt: "Linux入门必学！which命令让你快速定位可执行文件位置，让命令管理更轻松，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-33-history",
+        path: "/history/",
+        date: "2026/2/11",
+        excerpt: "Linux入门必学！history命令让你轻松查看和管理命令历史，让操作效率翻倍，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-32-man",
+        path: "/man/",
+        date: "2026/2/10",
+        excerpt: "Linux入门必学！man命令让你快速查找命令用法，让Linux学习更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-31-touch",
+        path: "/touch/",
+        date: "2026/2/9",
+        excerpt: "Linux入门必学！touch命令让你轻松创建和修改文件时间，让文件管理更灵活，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-30-echo",
+        path: "/echo/",
+        date: "2026/2/8",
+        excerpt: "Linux入门必学！echo命令让你灵活控制文本输出，让脚本编写更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-29-date",
+        path: "/date/",
+        date: "2026/2/7",
+        excerpt: "Linux入门必学！date命令让你灵活显示和设置系统时间，让时间操作更精准，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-28-sudo",
+        path: "/sudo/",
+        date: "2026/2/6",
+        excerpt: "Linux入门必学！sudo命令让你安全执行特权操作，让系统管理更安全，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-27-su",
+        path: "/su/",
+        date: "2026/2/5",
+        excerpt: "Linux入门必学！su命令让你安全切换用户身份，让系统管理更灵活，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-26-tar",
+        path: "/tar/",
+        date: "2026/2/4",
+        excerpt: "Linux入门必学！tar命令让你轻松管理文件打包和压缩，让文件传输更便捷，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-25-ssh",
+        path: "/ssh/",
+        date: "2026/1/30",
+        excerpt: "Linux入门必学！ssh命令让你安全远程管理服务器，让运维工作更便捷，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-24-wget",
+        path: "/wget/",
+        date: "2026/1/29",
+        excerpt: "Linux入门必学！wget命令让你轻松下载网络文件，让文件获取更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-23-curl",
+        path: "/curl/",
+        date: "2026/1/28",
+        excerpt: "Linux入门必学！curl命令让你轻松进行HTTP请求和文件下载，让网络操作更简单，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-22-kill",
+        path: "/kill/",
+        date: "2026/1/27",
+        excerpt: "Linux入门必学！kill命令让你优雅终止进程，让系统管理更得心应手，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-21-ps",
+        path: "/ps/",
+        date: "2026/1/26",
+        excerpt: "Linux入门必学！ps命令让你轻松查看系统进程状态，让进程管理更高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-20-top",
+        path: "/top/",
+        date: "2026/1/25",
+        excerpt: "Linux入门必学！top命令让你实时查看进程和系统资源使用情况，让性能分析更直观，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-19-free",
+        path: "/free/",
+        date: "2026/1/24",
+        excerpt: "Linux入门必学！free命令让你实时查看内存使用情况，让系统性能优化更精准，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-18-du",
+        path: "/du/",
+        date: "2026/1/23",
+        excerpt: "Linux入门必学！du命令让你精确查看目录和文件大小，让存储优化更智能，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-17-df",
+        path: "/df/",
+        date: "2026/1/22",
+        excerpt: "Linux入门必学！df命令让你实时监控磁盘使用情况，让存储管理更轻松，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-16-chown",
+        path: "/chown/",
+        date: "2026/1/21",
+        excerpt: "Linux入门必学！chown命令让你轻松更改文件所有者和组，让文件管理更安全，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-15-chmod",
+        path: "/chmod/",
+        date: "2026/1/20",
+        excerpt: "Linux入门必学！chmod命令让你轻松控制文件访问权限，让系统安全更有保障，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-14-grep",
+        path: "/grep/",
+        date: "2026/1/19",
+        excerpt: "Linux入门必学！grep命令让你快速查找文件中的特定内容，让文本处理变得高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-13-find",
+        path: "/find/",
+        date: "2026/1/18",
+        excerpt: "Linux入门必学！find命令让你快速定位任意文件，让文件查找变得轻而易举，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-12-wc",
+        path: "/wc/",
+        date: "2026/1/17",
+        excerpt: "Linux入门必学！wc命令让你轻松统计文件行数、单词数、字符数，让文本分析变得简单，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-11-less",
+        path: "/less/",
+        date: "2026/1/16",
+        excerpt: "Linux入门必学！less命令让你高效查看大文件内容，让文件阅读变得游刃有余，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-10-tail",
+        path: "/tail/",
+        date: "2026/1/15",
+        excerpt: "Linux入门必学！tail命令让你轻松查看文件末尾内容，实时监控日志变得简单，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-09-head",
+        path: "/head/",
+        date: "2026/1/14",
+        excerpt: "Linux入门必学！head命令让你快速查看文件开头内容，让大文件预览变得轻松简单，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-05-rm",
+        path: "/rm/",
+        date: "2026/1/13",
+        excerpt: "Linux入门必学！rm命令让你掌握rm的使用技巧，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-04-mkdir",
+        path: "/mkdir/",
+        date: "2026/1/13",
+        excerpt: "Linux入门必学！mkdir命令让你掌握mkdir的使用技巧，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-08-cat",
+        path: "/cat/",
+        date: "2026/1/13",
+        excerpt: "Linux入门必学！cat命令让你轻松查看和合并文件内容，让文本操作变得简单高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-07-mv",
+        path: "/mv/",
+        date: "2026/1/12",
+        excerpt: "Linux入门必学！mv命令让你轻松移动和重命名文件，让文件管理变得得心应手，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-06-cp",
+        path: "/cp/",
+        date: "2026/1/11",
+        excerpt: "Linux入门必学！cp命令让你轻松备份和复制文件，让数据迁移变得简单高效，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-03-ls",
+        path: "/ls/",
+        date: "2026/1/9",
+        excerpt: "Linux入门必学！ls命令让你掌握ls的使用技巧，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-02-cd",
+        path: "/cd/",
+        date: "2026/1/7",
+        excerpt: "Linux入门必学！cd命令让你掌握cd的使用技巧，成为Linux高手！..."
+    },
+    
+    {
+        title: "Linux每日命令-01-pwd",
+        path: "/pwd/",
+        date: "2026/1/6",
+        excerpt: "Linux入门必学！pwd命令让你随时知道自己在哪，避免在文件系统中迷路，成为Linux导航高手！..."
+    },
+    
+    {
+        title: "扩展屏幕--手机平板做副屏是怎么实现的",
+        path: "/se7892/",
+        date: "2025/12/18",
+        excerpt: "只有一个屏幕不够用？手机、平板、闲置笔记本都能变成扩展屏！本文详细介绍如何使用ParsecVDisplay虚拟显示器和UU远程，将任何设备变成你的第二屏幕，提升工作效率。..."
+    },
+    
+    {
+        title: "Windows安装-如何使用PE安装Windows11",
+        path: "/win7535/",
+        date: "2025/12/14",
+        excerpt: "使用PE安装Windows具有显著优势：无需为不同系统版本反复制作启动盘，兼容性强；可预装各类实用工具（如DiskGenius、Dism++、杀毒软件等），打造随身移动运维平台；支持在安装前对硬盘进行..."
+    },
+    
+    {
+        title: "MicrosoftOffice-手把手教你安装Office并激活",
+        path: "/office5269/",
+        date: "2025/12/8",
+        excerpt: "直接明了的教程，手把手教你如何安装office和激活，适用于所有版本的Office..."
+    },
+    
+    {
+        title: "飞牛OS-废物转生-老旧笔记本变身全能服务器",
+        path: "/HomeServer-5488/",
+        date: "2025/12/3",
+        excerpt: "将2018年的老笔记本改造成全能NAS服务器，通过安装飞牛OS实现轻量、易用的家庭服务器，提供WebUI管理界面和FN Connect远程访问功能。..."
+    },
+    
+    {
+        title: "Windows系统安装完整指南",
+        path: "/windo1234/",
+        date: "2025/11/23",
+        excerpt: "全面步骤详解Windows系统安装，包含必备工具、品牌驱动获取及BIOS启动设置，使用微软官方Media Creation Tool制作启动盘，确保硬件满血发挥和稳定流畅体验。..."
+    },
+    
+    {
+        title: "Ubuntu老电脑焕发新生活",
+        path: "/ubun4567/",
+        date: "2025/11/20",
+        excerpt: "为2018年的戴尔灵越5488安装Ubuntu系统，通过轻量化的Linux系统让老旧笔记本焕发第二春，适合办公、学习甚至轻度服务器使用。..."
+    },
+    
+    {
+        title: "Windows系统增强神器PowerToys",
+        path: "/powe6789/",
+        date: "2025/11/9",
+        excerpt: "微软官方免费开源工具集PowerToys，提供高级粘贴、颜色选择器、PowerToys Run、屏幕标尺等9大神级功能，让Windows系统效率直接拉满。..."
+    },
+    
+    {
+        title: "Hexo博客完整部署指南",
+        path: "/hexo9012/",
+        date: "2025/10/30",
+        excerpt: "从零开始创建Hexo博客的完整指南，包含环境准备、站点配置、部署设置、源代码管理以及VS Code工作流程，实现双仓库分离管理。..."
+    },
+    
+    {
+        title: "Hexo Next主题配置指南",
+        path: "/next0123/",
+        date: "2025/10/30",
+        excerpt: "非常详尽的Hexo Next主题进阶配置指南，包含页面菜单配置、文章管理、布局定制、增强功能、网站优化美化等全方位定制技巧。..."
+    },
+    
+    {
+        title: "K8s部署Prometheus和Grafana",
+        path: "/k8sp7890/",
+        date: "2025/10/28",
+        excerpt: "详细介绍如何在Kubernetes集群中使用Helm部署Prometheus和Grafana，包含完整的安装配置步骤、持久化存储设置、以及UI自定义方案。..."
+    },
+    
+    {
+        title: "Kubernetes集群部署指南",
+        path: "/kube1234/",
+        date: "2025/10/28",
+        excerpt: "在Ubuntu系统上部署Kubernetes集群的详细步骤，包括环境准备、containerd配置、集群初始化以及网络插件部署，并附带完整的命令参考。..."
+    },
+    
+    {
+        title: "Prometheus配置文件完整解析",
+        path: "/prom3456/",
+        date: "2025/10/28",
+        excerpt: "详细解析Prometheus配置文件(prometheus.yml)的所有关键部分，包括全局设置、规则加载、告警配置、指标采集和远程存储等核心功能的配置方法。..."
+    },
+    
+    {
+        title: "SSH远程端口转发配置指南",
+        path: "/sshf5678/",
+        date: "2025/10/28",
+        excerpt: "详细介绍如何通过Systemd配置持久化的SSH远程端口转发服务，包含完整的配置文件、自启动设置和故障排查方法。..."
+    },
+    
+    {
+        title: "飞牛OS Docker部署Tailscale",
+        path: "/feinu2345/",
+        date: "2025/10/28",
+        excerpt: "详细介绍如何在飞牛OS NAS系统上使用Docker部署Tailscale，实现安全可靠的远程访问方案，包含完整的配置步骤和移动端设置指南。..."
+    },
+    
+    {
+        title: "饥荒联机版服务器搭建指南",
+        path: "/jihua3456/",
+        date: "2025/10/28",
+        excerpt: "详细介绍如何在Linux系统上搭建饥荒联机版专用服务器，包括环境准备、SteamCMD安装、服务器配置、MOD管理等完整步骤。..."
+    },
+    
+    {
+        title: "Linux磁盘分区自动挂载配置",
+        path: "/disk2345/",
+        date: "2025/10/18",
+        excerpt: "详细介绍如何在Linux系统中配置磁盘分区自动挂载，包括查看磁盘信息、创建挂载点、配置fstab文件以及处理NTFS分区等常见场景。..."
+    },
+    
+    {
+        title: "Linux自动内存缓存清理方案",
+        path: "/memo8901/",
+        date: "2025/10/18",
+        excerpt: "基于Systemd的Linux内存缓存自动清理方案，通过Shell脚本和Systemd Timer实现定时、安全的缓存清理，包含可用内存阈值检查和完整的日志监控配置。..."
+    },
+    
+    {
+        title: "Tailscale私有DERP中继部署",
+        path: "/tail4567/",
+        date: "2025/10/18",
+        excerpt: "在VPS上自建Tailscale DERP中继服务，包含Go环境安装、derper编译安装、自签名证书生成、derpMap配置及systemd服务化，提升无法P2P直连设备的连接稳定性。..."
+    }
+    
+];
+
+function toggleSearch() {
+    const dropdown = document.getElementById('search-dropdown');
+    if (dropdown.style.display === 'none') {
+        dropdown.style.display = 'block';
+        document.getElementById('search-input').focus();
+        document.addEventListener('click', closeSearchOnClickOutside);
+    } else {
+        dropdown.style.display = 'none';
+        document.removeEventListener('click', closeSearchOnClickOutside);
+    }
+}
+
+function closeSearchOnClickOutside(event) {
+    const container = document.querySelector('.search-container');
+    if (!container.contains(event.target)) {
+        document.getElementById('search-dropdown').style.display = 'none';
+        document.removeEventListener('click', closeSearchOnClickOutside);
+    }
+}
+
+function searchPosts(keyword) {
+    const resultsContainer = document.getElementById('search-results');
+    
+    if (!keyword.trim()) {
+        resultsContainer.innerHTML = '<div style="text-align: center; color: #999; padding: 20px;">输入关键词搜索文章</div>';
+        return;
+    }
+    
+    const results = allPosts.filter(post => 
+        post.title.toLowerCase().includes(keyword.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(keyword.toLowerCase())
+    );
+    
+    if (results.length === 0) {
+        resultsContainer.innerHTML = '<div style="text-align: center; color: #999; padding: 20px;">未找到相关文章</div>';
+        return;
+    }
+    
+    resultsContainer.innerHTML = results.map(post => `
+        <a href="${post.path}" style="display: block; padding: 12px; margin: 5px 0; border-radius: 6px; text-decoration: none; color: #333; transition: all 0.3s;" 
+           onmouseover="this.style.background='#f5f5f5'" 
+           onmouseout="this.style.background='transparent'">
+            <div style="font-weight: 500; margin-bottom: 5px; color: #ff728b;">${post.title}</div>
+            <div style="font-size: 12px; color: #999; margin-bottom: 5px;">${post.date}</div>
+            <div style="font-size: 13px; color: #666; line-height: 1.4;">${post.excerpt}</div>
+        </a>
+    `).join('');
+}
+;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var donateBtn = document.querySelector('.donate-button');
+            var qrcode = document.querySelector('.donate-qrcode');
+            
+            donateBtn.addEventListener('mouseenter', function() {
+                qrcode.style.display = 'block';
+            });
+            
+            donateBtn.addEventListener('mouseleave', function() {
+                qrcode.style.display = 'none';
+            });
+        });
+    ;
+
+        // 返回顶部功能
+        window.addEventListener('scroll', function() {
+            var backToTop = document.getElementById('back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    ;
+
+        // 高对比度粒子效果 - 带边界反弹和生命周期
+        (function() {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            const minParticles = 20;
+            const maxParticles = 50;
+            const colors = ['#ff6b9d', '#c44569', '#4a69bd', '#0c2461', '#ffa502', '#ff6348'];
+            
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 1.4;
+                    this.vy = (Math.random() - 0.5) * 1.4;
+                    this.radius = Math.random() * 3 + 2;
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.baseOpacity = Math.random() * 0.25 + 0.25;
+                    this.createdTime = Date.now();
+                    this.lifetime = 10000; // 10秒生命周期
+                    this.fadeInDuration = 1000; // 1秒淡入
+                    this.fadeOutDuration = 1000; // 1秒淡出
+                }
+                
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    // 边界反弹
+                    if (this.x - this.radius < 0) {
+                        this.x = this.radius;
+                        this.vx *= -1;
+                    }
+                    if (this.x + this.radius > canvas.width) {
+                        this.x = canvas.width - this.radius;
+                        this.vx *= -1;
+                    }
+                    if (this.y - this.radius < 0) {
+                        this.y = this.radius;
+                        this.vy *= -1;
+                    }
+                    if (this.y + this.radius > canvas.height) {
+                        this.y = canvas.height - this.radius;
+                        this.vy *= -1;
+                    }
+                }
+                
+                getAge() {
+                    return Date.now() - this.createdTime;
+                }
+                
+                isExpired() {
+                    return this.getAge() > this.lifetime;
+                }
+                
+                getOpacity() {
+                    const age = this.getAge();
+                    let opacity = this.baseOpacity;
+                    
+                    // 淡入效果
+                    if (age < this.fadeInDuration) {
+                        opacity *= age / this.fadeInDuration;
+                    }
+                    // 淡出效果
+                    else if (age > this.lifetime - this.fadeOutDuration) {
+                        const fadeProgress = (this.lifetime - age) / this.fadeOutDuration;
+                        opacity *= fadeProgress;
+                    }
+                    
+                    return opacity;
+                }
+                
+                draw() {
+                    const currentOpacity = this.getOpacity();
+                    
+                    // 添加高斯模糊效果
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = this.color;
+                    
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = currentOpacity;
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                    
+                    // 重置模糊效果
+                    ctx.shadowBlur = 0;
+                }
+            }
+            
+            // 初始化粒子
+            for (let i = 0; i < 30; i++) {
+                particles.push(new Particle());
+            }
+            
+            function manageParticles() {
+                // 移除过期粒子
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    if (particles[i].isExpired()) {
+                        particles.splice(i, 1);
+                    }
+                }
+                
+                // 维持粒子数量
+                if (particles.length < minParticles) {
+                    particles.push(new Particle());
+                } else if (particles.length < maxParticles && Math.random() < 0.02) {
+                    particles.push(new Particle());
+                }
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                manageParticles();
+                
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+            
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        })();
+    ;
+
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+;
+
+    const gitalk = new Gitalk({
+        clientID: 'Ov23liYz6EVvZYMe2lt6',
+        clientSecret: '611c5b0f822b8284c50664eccc02401adbc3c6cf',
+        repo: 'blog-comments',      // The repository of store comments,
+        owner: 'echohaoran',
+        admin: ['echohaoran'],
+        language: 'zh-CN',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script></body></html>
